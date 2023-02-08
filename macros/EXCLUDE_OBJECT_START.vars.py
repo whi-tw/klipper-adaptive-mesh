@@ -1,3 +1,3 @@
-rename_existing: "_EXCLUDE_OBJECT_START"
+rename_existing = "_EXCLUDE_OBJECT_START"
 
 MACRO_VARS = {}

@@ -1,0 +1,23 @@
+{% for macro in macros -%}
+[gcode_macro {{ macro.name }}]
+{% if macro.rename_existing -%}
+rename_existing: {{ macro.rename_existing }}
+{% endif -%}
+{% if macro.description -%}
+description: {{ macro.description }}
+{% endif -%}
+{% if macro.variables -%}
+{% for section in macro.variables %}
+### {{ section.comment }}
+{% for var, default in section.variables.items() -%}
+variable_{{ var }}: {% if default is string %}"{{ default }}"{% else %}{{ default }}{% endif %}
+{% endfor -%}
+{% endfor -%}
+{% endif -%}
+gcode:
+{%- filter indent(width=4) %}
+{{ macro.gcode }}
+{%- endfilter %}
+{%- if not loop.last %}
+{% endif -%}
+{%- endfor %}
