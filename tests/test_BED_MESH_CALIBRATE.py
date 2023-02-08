@@ -247,7 +247,7 @@ def test_created_mesh_names_variable_should_be_created_correctly(
         pytest.param(
             ["SOME_OLD_OBJECT"],
             {"SOME_OLD_OBJECT": {}},
-            ["BED_MESH_PROFILE DELETE=SOME_OLD_OBJECT"],
+            ["BED_MESH_PROFILE REMOVE=SOME_OLD_OBJECT"],
             id="when_there_was_a_single_object",
         ),
         pytest.param(
@@ -257,8 +257,8 @@ def test_created_mesh_names_variable_should_be_created_correctly(
                 "ANOTHER_OLD_OBJECT": {},
             },
             [
-                "BED_MESH_PROFILE DELETE=SOME_OLD_OBJECT",
-                "BED_MESH_PROFILE DELETE=ANOTHER_OLD_OBJECT",
+                "BED_MESH_PROFILE REMOVE=SOME_OLD_OBJECT",
+                "BED_MESH_PROFILE REMOVE=ANOTHER_OLD_OBJECT",
             ],
             id="when_there_were_multiple_objects",
         ),
