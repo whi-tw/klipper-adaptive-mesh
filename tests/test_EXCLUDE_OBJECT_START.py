@@ -28,12 +28,13 @@ def variables():
 
 
 @pytest.mark.parametrize(
-    "object_name,created_mesh_names,bed_mesh_profiles,expected",
+    "object_name,created_mesh_names,bed_mesh_profiles,current_mesh,expected",
     [
         pytest.param(
             "some_object",
             ["ABM_SOME_OBJECT", "default"],
             {"ABM_SOME_OBJECT": {}, "default": {}},
+            "",
             ["BED_MESH_PROFILE LOAD=ABM_SOME_OBJECT"],
             id="created_by_us-mesh_exists-default_exists-default_was_created_by_us",
         ),
@@ -41,6 +42,7 @@ def variables():
             "some_object",
             ["ABM_SOME_OTHER_OBJECT"],
             {"ABM_SOME_OBJECT": {}, "default": {}},
+            "",
             ["BED_MESH_PROFILE LOAD="],
             marks=pytest.mark.xfail(strict=True),  # should fail
             id="not_created_by_us-mesh_exists",
@@ -49,6 +51,7 @@ def variables():
             "some_object",
             ["ABM_SOME_OBJECT"],
             {"ABM_SOME_OTHER_OBJECT": {}, "default": {}},
+            "",
             ["BED_MESH_PROFILE LOAD="],
             marks=pytest.mark.xfail(strict=True),  # should fail
             id="created_by_us-mesh_does_not_exist",
@@ -57,6 +60,7 @@ def variables():
             "some_object",
             ["ABM_SOME_OTHER_OBJECT"],
             {"ABM_SOME_OTHER_OBJECT": {}},
+            "",
             ["BED_MESH_PROFILE LOAD="],
             marks=pytest.mark.xfail(strict=True),  # should fail
             id="not_created_by_us-mesh_does_not_exist",
@@ -65,6 +69,7 @@ def variables():
             "some_object",
             ["ABM_SOME_OTHER_OBJECT", "default"],
             {"ABM_SOME_OTHER_OBJECT": {}, "default": {}},
+            "",
             ["BED_MESH_PROFILE LOAD=default"],
             id="not_created_by_us-mesh_does_not_exist-default_exists-default_was_created_by_us",  # noqa: E501
         ),
@@ -72,9 +77,19 @@ def variables():
             "some_object",
             ["ABM_SOME_OTHER_OBJECT"],
             {"ABM_SOME_OTHER_OBJECT": {}, "default": {}},
+            "",
             ["BED_MESH_PROFILE LOAD="],
             marks=pytest.mark.xfail(strict=True),  # should fail
             id="not_created_by_us-mesh_does_not_exist-default_exists-default_was_not_created_by_us",  # noqa: E501
+        ),
+        pytest.param(
+            "some_object",
+            ["ABM_SOME_OBJECT"],
+            {"ABM_SOME_OBJECT": {}, "default": {}},
+            "ABM_SOME_OBJECT",
+            ["BED_MESH_PROFILE LOAD=ABM_SOME_OBJECT"],
+            marks=pytest.mark.xfail(strict=True),  # should fail
+            id="mesh-already-loaded",  # noqa: E501
         ),
     ],
 )
@@ -82,11 +97,13 @@ def test_mesh_is_loaded_when_it_should_be(
     object_name: str,
     created_mesh_names: List[str],
     bed_mesh_profiles: dict,
+    current_mesh: str,
     expected: List[str],
     fake_printer: FakePrinter,
     variables: dict,
 ):
     fake_printer.printer.bed_mesh.profiles = bed_mesh_profiles
+    fake_printer.printer.bed_mesh.profile_name = current_mesh
     fake_printer.printer[
         "gcode_macro BED_MESH_CALIBRATE"
     ].created_mesh_names = created_mesh_names

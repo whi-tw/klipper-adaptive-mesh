@@ -23,6 +23,7 @@ class ExcludeObject:
 
 class BedMesh:
     profiles = {}
+    profile_name = ""
 
 
 class Macro:
