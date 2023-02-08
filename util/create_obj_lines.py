@@ -18,7 +18,7 @@ for y in range(y_count):
         center = [str(min_x + size[0] / 2), str(min_y + size[1] / 2)]
 
         create_cmds.append(
-            f"EXCLUDE_OBJECT_DEFINE NAME=object_{x}_{y} CENTER={','.join(center)} POLYGON=[[{min_x},{min_y}],[{max_x},{min_y}],[{max_x},{max_y}],[{min_x},{max_y}]]"
+            f"EXCLUDE_OBJECT_DEFINE NAME=object_{x}_{y} CENTER={','.join(center)} POLYGON=[[{min_x},{min_y}],[{max_x},{min_y}],[{max_x},{max_y}],[{min_x},{max_y}]]"  # noqa: E501
         )
         start_end_cmds.append(f"EXCLUDE_OBJECT_START NAME=object_{x}_{y}")
         start_end_cmds.append(f"EXCLUDE_OBJECT_END NAME=object_{x}_{y}")
