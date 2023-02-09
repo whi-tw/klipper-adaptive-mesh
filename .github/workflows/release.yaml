@@ -103,4 +103,3 @@ jobs:
           name: ${{ needs.setup-versions.outputs.version }}
           tag: v${{ needs.setup-versions.outputs.version }}
           bodyFile: "./release-notes.txt"
-          token: ${{ secrets.GITHUB_TOKEN }}
