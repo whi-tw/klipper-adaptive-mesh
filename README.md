@@ -39,7 +39,7 @@ At the top of the file, under `[gcode_macro BED_MESH_CALIBRATE]` there are some 
 
 <dl>
  <dt>`variable_fuzz_*`</dt>
- <dd>If using [voron-tap][https://github.com/VoronDesign/Voron-Tap] or similar (where the nozzle contacts the bed when probing), fuzz will reduce the likelihood of the same point being probed repeatedly, hopefully reducing possible damage to the bed.</dd>
+ <dd>If using [voron-tap](https://github.com/VoronDesign/Voron-Tap) or similar (where the nozzle contacts the bed when probing), fuzz will reduce the likelihood of the same point being probed repeatedly, hopefully reducing possible damage to the bed.</dd>
  <dt>`variable_probe_dock_enable`</dt>
  <dd>If using a dockable probe ([klicky](https://github.com/jlas1/Klicky-Probe) etc.), this will allow you to call another macro before and after probing, to attach and detach the probe.</dd>
  <dt>`variable_per_object_mesh_enable`</dt>
