@@ -24,6 +24,7 @@ With the knowledge of [`[exclude_object]`](https://www.klipper3d.org/Exclude_Obj
   - [EXCLUDE_OBJECT_START](#exclude_object_start)
 - [Caveats / gotchas](#caveats--gotchas)
 - [Development](#development)
+- [Attribution](#attribution)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

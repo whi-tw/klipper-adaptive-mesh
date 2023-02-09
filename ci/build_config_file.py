@@ -8,7 +8,8 @@ import jinja2
 
 template_file = Path(sys.argv[1]).absolute()
 macros_dir = Path(sys.argv[2]).absolute()
-output_file = Path(sys.argv[3]).absolute()
+version = sys.argv[3]
+output_file = Path(sys.argv[4]).absolute()
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_file.parent))
 
@@ -38,7 +39,7 @@ for macro_gcode_file in macro_gcode_files:
 
     macros.append(macro)
 
-rendered_file = template.render(macros=macros)
+rendered_file = template.render(macros=macros, version=version)
 
 output_dir = Path(output_file).parent.absolute()
 
