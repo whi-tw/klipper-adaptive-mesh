@@ -1,2 +1,1 @@
-MD013:
-  line_length: 120
+MD013: false # disable line length checking.
