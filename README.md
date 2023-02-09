@@ -86,3 +86,7 @@ make
 ```
 
 The file is built to `output/adaptive_bed_mesh.cfg`.
+
+## Attribution
+
+Inspiration and logic for this project has been taken heavily from [kyleisah/Klipper-Adaptive-Meshing-Purging](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging) - thanks!
