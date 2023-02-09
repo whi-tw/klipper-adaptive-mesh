@@ -1,12 +1,17 @@
-name: Run Tests on PR
+name: Build Config File
 on:
-  pull_request:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
 
 jobs:
-  test:
+  build-config-file:
+    name: Build Config File
     runs-on: ubuntu-22.04
+    if: "!contains(github.event.head_commit.message, 'Bump version to ')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # 3.3.0
       - name: gather versions from '.tool-versions'
         uses: endorama/asdf-parse-tool-versions@v1
         id: versions
@@ -31,6 +36,7 @@ jobs:
       - name: Install dependencies if cache does not exist
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
+
       - name: Install Project
         run: poetry install --no-interaction
 
@@ -38,3 +44,13 @@ jobs:
         run: |
           source .venv/bin/activate
           pytest tests/
+
+      - name: build
+        run: |
+          make output/adaptive_bed_mesh.cfg
+
+      - name: upload
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # 3.1.2
+        with:
+          name: adaptive_bed_mesh.cfg
+          path: output/adaptive_bed_mesh.cfg

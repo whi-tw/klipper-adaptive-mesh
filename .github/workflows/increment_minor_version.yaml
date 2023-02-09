@@ -1,0 +1,47 @@
+# This workflow increments the minor version
+# when a release has been released
+
+## Adapted from https://github.com/AP-Hunt/cf-traverse/blob/main/.github/workflows/increment_minor_version_and_create_release.yml
+
+on:
+  release:
+    types: [published]
+
+name: Increment minor version
+jobs:
+  increment_minor_version:
+    name: Increment minor version
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # 3.3.0
+
+      - name: gather versions from '.tool-versions'
+        uses: endorama/asdf-parse-tool-versions@v1
+        id: versions
+      - name: Set up python
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "${{ env.PYTHON_VERSION }}"
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Increment minor version
+        id: bump
+        run: |
+          echo "Current version: $(poetry version --short)"
+          poetry version minor
+          echo "New version: $(poetry version --short)"
+          echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
+
+      - name: Commit, push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add pyproject.toml
+          git commit -m "Bump version to ${{ steps.bump.outputs.version }}"
