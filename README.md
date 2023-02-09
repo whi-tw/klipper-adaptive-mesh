@@ -14,8 +14,18 @@ There are predominantly two major ways of doing bed meshes in Klipper:
 With the knowledge of [`[exclude_object]`](https://www.klipper3d.org/Exclude_Object.html), I imagine a third kind of mesh generation, one where each object gets its own personal *small* mesh, for only the area on the build plate that it covers. This way, each object has as detailed a mesh as possible, hopefully increasing the precision.
 
 ## Table of Contents
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Setup](#setup)
+  - [Configuration](#configuration)
+- [Macros Added](#macros-added)
+  - [BED_MESH_CALIBRATE](#bed_mesh_calibrate)
+  - [EXCLUDE_OBJECT_START](#exclude_object_start)
+- [Caveats / gotchas](#caveats--gotchas)
+- [Development](#development)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Setup
 
