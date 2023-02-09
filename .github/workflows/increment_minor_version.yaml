@@ -15,15 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # 3.3.0
 
-      - name: gather versions from '.tool-versions'
+      - name: 🏗️ gather versions from '.tool-versions'
         uses: endorama/asdf-parse-tool-versions@v1
         id: versions
-      - name: Set up python
+      - name: 🏗️ Set up python
         id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: "${{ env.PYTHON_VERSION }}"
-      - name: Install Poetry
+      - name: 🏗️ Install Poetry
         uses: snok/install-poetry@v1
         with:
           version: latest
@@ -31,7 +31,7 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
 
-      - name: Increment minor version
+      - name: 👷 Increment minor version
         id: bump
         run: |
           echo "Current version: $(poetry version --short)"
@@ -39,7 +39,7 @@ jobs:
           echo "New version: $(poetry version --short)"
           echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
 
-      - name: Commit, push
+      - name: 👷 Commit, push
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com

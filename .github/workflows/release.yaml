@@ -11,22 +11,22 @@ jobs:
       python_version: ${{ steps.version.outputs.python_version }}
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # 3.3.0
-      - name: gather versions from '.tool-versions'
+      - name: 🏗️ gather versions from '.tool-versions'
         uses: endorama/asdf-parse-tool-versions@v1
         id: versions
-      - name: Set up python
+      - name: 🏗️ Set up python
         id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: "${{ env.PYTHON_VERSION }}"
-      - name: Install Poetry
+      - name: 🏗️ Install Poetry
         uses: snok/install-poetry@v1
         with:
           version: latest
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
-      - name: Output Versions
+      - name: 🏗️ Output Versions
         id: version
         run: |
           echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
@@ -38,41 +38,41 @@ jobs:
     needs: setup-versions
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # 3.3.0
-      - name: Set up python
+      - name: 🏗️ Set up python
         id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: "${{ needs.setup-versions.outputs.python_version }}"
-      - name: Install Poetry
+      - name: 🏗️ Install Poetry
         uses: snok/install-poetry@v1
         with:
           version: latest
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
-      - name: Load cached venv
+      - name: 🏗️ Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ needs.setup-versions.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Install dependencies if cache does not exist
+          key: venv-${{ runner.os }}-${{ needs.setup-versions.outputs.python_version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: 🏗️ Install dependencies if cache does not exist
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
 
-      - name: Install Project
+      - name: 🏗️ Install Project
         run: poetry install --no-interaction
 
-      - name: Run Tests
+      - name: 👷 Run Tests
         run: |
           source .venv/bin/activate
           pytest tests/
 
-      - name: build
+      - name: 👷 build
         run: |
           make output/adaptive_bed_mesh.cfg VERSION="${{ needs.setup-versions.outputs.version }}"
 
-      - name: upload
+      - name: 🏗️ upload
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # 3.1.2
         with:
           name: adaptive_bed_mesh.cfg
@@ -86,7 +86,7 @@ jobs:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # 3.3.0
         with:
           fetch-depth: 0
-      - name: create release notes
+      - name: 👷 create release notes
         run: |
           export OLD_TAG=$(git describe --tags --abbrev=0)
           export NEW_TAG="v${{ needs.setup-versions.outputs.version }}"
@@ -103,4 +103,4 @@ jobs:
           name: ${{ needs.setup-versions.outputs.version }}
           tag: v${{ needs.setup-versions.outputs.version }}
           bodyFile: "./release-notes.txt"
-          token: ${{ secrets.GHA_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
