@@ -97,6 +97,8 @@ jobs:
           envsubst < .github/release_notes_template.txt > ./release-notes.txt
         ## short hand for grab all artifacts.
       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # 3.0.2
+        with:
+          name: "adaptive_bed_mesh.cfg"
       - uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e # 1.12.0
         with:
           draft: true
