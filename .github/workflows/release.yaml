@@ -92,9 +92,9 @@ jobs:
         run: |
           export OLD_TAG=$(git describe --tags --abbrev=0)
           export NEW_TAG="v${{ needs.setup-versions.outputs.version }}"
-          export COMMIT_COUNT=$(git rev-list --count ${old_tag}..HEAD)
+          export COMMIT_COUNT=$(git rev-list --count ${OLD_TAG}..HEAD)
           export VERSION="${{ needs.setup-versions.outputs.version }}"
-          envsubst < .github/release_notes_template.txt > ./release-notes.txt
+          envsubst < .github/release_notes_template.md > ./release-notes.md
         ## short hand for grab all artifacts.
       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # 3.0.2
         with:
@@ -106,4 +106,4 @@ jobs:
           artifacts: "adaptive_bed_mesh.cfg"
           name: ${{ needs.setup-versions.outputs.version }}
           tag: v${{ needs.setup-versions.outputs.version }}
-          bodyFile: "./release-notes.txt"
+          bodyFile: "./release-notes.md"
