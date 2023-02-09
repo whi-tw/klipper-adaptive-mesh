@@ -7,6 +7,7 @@
 > *TL;DR*: One bed mesh for each printed object
 
 There are predominantly two major ways of doing bed meshes in Klipper:
+
 1. Create one single mesh for the whole bed, using the settings in [the `[bed_mesh]` config section](https://www.klipper3d.org/Bed_Mesh.html).
 2. Create a mesh for only the area used by the current print. There are multiple implementations of this, but the ones I have seen most commonly used are [kyleisah/Klipper-Adaptive-Meshing-Purging](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging) and [Klipper mesh on print area only (ChipCE)](https://gist.github.com/ChipCE/95fdbd3c2f3a064397f9610f915f7d02)
 
@@ -23,16 +24,16 @@ Download the config file (`adaptive_bed_mesh.cfg`) from the [latest release](htt
 At the top of the file, under `[gcode_macro BED_MESH_CALIBRATE]` there are some user-configurable variables. These are documented within the config file, and modify some behaviours of the macro. Ones you may wish to look at are:
 
 <dl>
-	<dt>`variable_fuzz_*`</dt>
-	<dd>If using [voron-tap][https://github.com/VoronDesign/Voron-Tap] or similar (where the nozzle contacts the bed when probing), fuzz will reduce the likelihood of the same point being probed repeatedly, hopefully reducing possible damage to the bed.</dd>
-	<dt>`variable_probe_dock_enable`</dt>
-	<dd>If using a dockable probe ([klicky](https://github.com/jlas1/Klicky-Probe) etc.), this will allow you to call another macro before and after probing, to attach and detach the probe.</dd>
-	<dt>`variable_per_object_mesh_enable`</dt>
-	<dd>If this is set to `False`, per-object meshing will be disabled, and a single mesh that covers the extents of all the objects in the gcode file will be created.</dd>
-	<dt>`variable_multi_mesh_max_objects`</dt>
-	<dd>The threshold number of objects in the print job to create individual meshes for. If the number of objects exceeds this limit, one single mesh will be created that covers all of them.</dd>
-	<dt>`variable_verbose`</dt>
-	<dd>Enables verbose output from the macro. This is set to `True` by default while the macro is in development.</dd>
+ <dt>`variable_fuzz_*`</dt>
+ <dd>If using [voron-tap][https://github.com/VoronDesign/Voron-Tap] or similar (where the nozzle contacts the bed when probing), fuzz will reduce the likelihood of the same point being probed repeatedly, hopefully reducing possible damage to the bed.</dd>
+ <dt>`variable_probe_dock_enable`</dt>
+ <dd>If using a dockable probe ([klicky](https://github.com/jlas1/Klicky-Probe) etc.), this will allow you to call another macro before and after probing, to attach and detach the probe.</dd>
+ <dt>`variable_per_object_mesh_enable`</dt>
+ <dd>If this is set to `False`, per-object meshing will be disabled, and a single mesh that covers the extents of all the objects in the gcode file will be created.</dd>
+ <dt>`variable_multi_mesh_max_objects`</dt>
+ <dd>The threshold number of objects in the print job to create individual meshes for. If the number of objects exceeds this limit, one single mesh will be created that covers all of them.</dd>
+ <dt>`variable_verbose`</dt>
+ <dd>Enables verbose output from the macro. This is set to `True` by default while the macro is in development.</dd>
 </dl>
 
 ## Macros Added
