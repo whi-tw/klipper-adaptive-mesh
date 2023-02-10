@@ -98,7 +98,7 @@ SET_GCODE_VARIABLE MACRO=BED_MESH_CALIBRATE VARIABLE=created_mesh_names VALUE=[]
     {% else %}
         {% set ref_index = -1 %}
     {% endif %}
-    MESH_MIN={'%0.3f' | format(x_min)},{'%0.3f' | format(y_min)} MESH_MAX={'%0.3f' | format(x_max)},{'%0.3f' | format(y_max)}
+
     _BED_MESH_CALIBRATE PROFILE=default MESH_MIN={'%0.3f' | format(x_min)},{'%0.3f' | format(y_min)} MESH_MAX={'%0.3f' | format(x_max)},{'%0.3f' | format(y_max)} ALGORITHM={algorithm} PROBE_COUNT={points_x},{points_y} RELATIVE_REFERENCE_INDEX={ref_index}
 
 {% else %}
