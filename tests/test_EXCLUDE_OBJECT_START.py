@@ -104,9 +104,9 @@ def test_mesh_is_loaded_when_it_should_be(
 ):
     fake_printer.printer.bed_mesh.profiles = bed_mesh_profiles
     fake_printer.printer.bed_mesh.profile_name = current_mesh
-    fake_printer.printer[
-        "gcode_macro BED_MESH_CALIBRATE"
-    ].created_mesh_names = created_mesh_names
+    fake_printer.printer["gcode_macro BED_MESH_CALIBRATE"].created_mesh_names = (
+        created_mesh_names
+    )
     output = fake_printer.render(params={"NAME": object_name}, **variables)
     for line in expected:
         assert line in output
